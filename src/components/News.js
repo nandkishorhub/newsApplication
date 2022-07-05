@@ -16,7 +16,6 @@ export class News extends Component {
       "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=e93f80079cd54a19a5b3f8957cdb84a2&page=1&pageSize=20";
     let data = await fetch(newsUrl);
     let parsedData = await data.json();
-    console.log(parsedData);
     this.setState({
       articles: parsedData.articles,
       totalArticle: parsedData.totalResults,
