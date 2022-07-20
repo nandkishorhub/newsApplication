@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import "./NavBar.css";
+import "../css/NavBar.css";
 
 let navLinkStyles = ({ isActive }) => ({
   fontWeight: isActive ? "bold" : "normal",
@@ -10,7 +10,7 @@ let navLinkStyles = ({ isActive }) => ({
 export class NavBar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="position-sticky top-0 z-index-2 navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
             NewsMonkey
