@@ -3,12 +3,18 @@ import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { collectArticle } from "../reduxComponents/newsReducer";
+import { setProgress } from "../reduxComponents/progressReducer";
+import { useSelector, useDispatch } from "react-redux";
+
+ 
 
 // TO capitalize first letter
 const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 
 const News = (props) => {
-  const [articles, setArticles] = useState([]);
+  const articles = useSelector((state) => state.articles);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -16,15 +22,15 @@ const News = (props) => {
   const { country, category, apiKey, pageSize } = props;
 
   const updateNews = async () => {
-    props.setProgress(10);
+    dispatch(setProgress(10))
     let newsUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`;
     setLoading(true);
     let data = await fetch(newsUrl);
     let parsedData = await data.json();
+    dispatch(collectArticle(parsedData.articles));
+    setTotalResults(data.length);
     setLoading(false);
-    setArticles(parsedData.articles);
-    setTotalResults(parsedData.totalResults);
-    props.setProgress(100);
+    dispatch(setProgress(100))
   };
 
   useEffect(() => {
@@ -44,7 +50,7 @@ const News = (props) => {
     let data = await fetch(newsUrl);
     let parsedData = await data.json();
     setLoading(false);
-    setArticles(articles.concat(parsedData.articles));
+    dispatch(collectArticle(articles.concat(parsedData.articles)));
     setTotalResults(parsedData.totalResults);
   };
 

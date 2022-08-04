@@ -1,31 +1,25 @@
 import "./App.css";
 
-import React, { useState } from "react";
+import React from "react";
 import NavBar from "./components/NavBar";
 import News from "./components/News";
 import LoadingBar from "react-top-loading-bar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 export default function App() {
   const apikey = process.env.REACT_APP_NEWS_API_KEY;
-  const [progress, setProgress] = useState(0);
-
-  const setProgressValue = (progress) => {
-    setProgress(progress);
-  };
-
+  const progressValue = useSelector((state) => state.progress);
   return (
     <Router>
       <NavBar />
-      <LoadingBar color="#f11946" progress={progress} />
+      <LoadingBar color="#f11946" progress={progressValue} />
       <Routes>
         <Route
           path="/"
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgressValue}
               key="general"
               pageSize={20}
               country="in"
@@ -38,7 +32,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="business"
               pageSize={20}
               country="in"
@@ -51,7 +44,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="entertainment"
               pageSize={20}
               country="in"
@@ -64,7 +56,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="health"
               pageSize={20}
               country="in"
@@ -77,7 +68,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="science"
               pageSize={20}
               country="in"
@@ -90,7 +80,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="sports"
               pageSize={20}
               country="in"
@@ -103,7 +92,6 @@ export default function App() {
           element={
             <News
               apiKey={apikey}
-              setProgress={setProgress}
               key="technology"
               pageSize={20}
               country="in"
